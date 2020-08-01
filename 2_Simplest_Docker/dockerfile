@@ -1,8 +1,8 @@
-FROM python:3.7.8-alpine3.12
+FROM python:3.7.8
 
 COPY 1_Simplest /app
 
-RUN pip install flask
+RUN pip install flask sklearn
 
 EXPOSE 80
 

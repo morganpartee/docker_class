@@ -43,13 +43,25 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
-        <h1>Welcome to the universe of REAL AI.</h1>
+        <h1>Welcome to REAL AI.</h1>
         <p>{{ pred }}</p>
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              <ul class=flashes>
+              {% for category, message in messages %}
+                <li class="text-{{ category }}">{{ message }}</li>
+              {% endfor %}
+              </ul>
+            {% endif %}
+          {% endwith %}
           <form action="/" method="POST" enctype=multipart/form-data id="response">
             <div class="col-sm-8">
-              <input type="test" id="text" name="text"/>
+              <input type="text" name="sepal_len" placeholder="Sepal Length"/>
+              <input type="text" name="sepal_wid" placeholder="Sepal Width"/>
+              <input type="text" name="petal_len" placeholder="Petal Length"/>
+              <input type="text" name="petal_wid" placeholder="Petal Width"/>
             </div>
-            <button type="submit" class="btn btn-primary" form="response">Upload</button>
+            <button type="submit" class="btn btn-primary" form="response">Submit</button>
           </form>
       </div>
     </div>

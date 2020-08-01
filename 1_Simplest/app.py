@@ -1,28 +1,38 @@
 from flask import Flask, render_template, send_from_directory, request, redirect, flash
+import secrets
+import pickle
 
 app = Flask(__name__)
+app.secret_key = secrets.token_urlsafe(32)
 
-
-def predict_death(age: int):
-    if age > 80:
-        return False
-    else:
-        return True
+# Let's load in the model we used before
+with open('model.pkl', 'rb') as f:
+    clf = pickle.load(f)
 
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    pred = "Enter your age."
+    index = "index.html"
+    pred = "Enter your iris sepal and petal specs below."
     if request.method == "GET":
-        return render_template("index.html", pred=pred)
+        return render_template(index, pred=pred)
     else:
-        print(request.form)
+        print(list(request.form.keys()))
         try:
-            response = int(request.form.get('text'))
-            pred = "You're probably good" if predict_death(response) else "...Take some time off..."
-        except:
-            redirect("index.html")
-    return render_template("index.html", pred=pred)
+            # Get the things from the form, make them floats (they start as strings)
+            responses = [request.form.get(item) for item in ["sepal_len", "sepal_wid", "petal_len", "petal_wid"]]
+            print(responses)
+            inputs = [[float(item) for item in responses]]
+            print(inputs)
+
+            pred = f"We think your flower is a {clf.predict(inputs)[0]}!"
+        except Exception as e:
+            print(e)
+            flash("Invalid inputs! Try again.", "warn")
+            redirect(index)
+
+    return render_template(index, pred=pred)
+
 
 @app.route("/js/<path:path>")
 def send_js(path):
