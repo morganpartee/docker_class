@@ -9,7 +9,7 @@ services:
       - backend
     depends_on:
       - mysql
-  
+
   mysql:
     image: mysql:8
     ports:

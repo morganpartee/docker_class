@@ -15,7 +15,7 @@ with open('model.pkl', 'rb') as f:
 # Note the server address here. Just mysql! It's the service name in our compose file.
 con = sa.create_engine('mysql://root:password@mysql', echo=True)
 
-sleep(10)
+sleep(15)
 con.connect()
 
 # Make the schema if it doesn't exist
