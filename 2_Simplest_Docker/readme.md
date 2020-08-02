@@ -1,10 +1,8 @@
 # Let's pack this thing up!  
 
-We'll put this app in a dockerfile.
+We'll put this app in a docker container, by writing a dockerfile.
 
 Docker will package this app, install the packages we need (if we need them), and run the flask app.
-
-We can even make this more production ready with GUnicorn if we want!
 
 Check out the `dockerfile` in this dir to see! Note there is no extension, that is normal.
 
@@ -24,3 +22,5 @@ That period means to build everything in the directory.
 Try:
 `docker run important_app -p 80:80` to run this thing!
 Visit localhost to see if it worked.
+
+If you're ready for another challenge, add GUnicorn. It isn't hard, and is way more production ready!
